@@ -36,6 +36,8 @@ import net.runelite.api.GameState;
 import net.runelite.api.ItemComposition;
 import net.runelite.api.MenuAction;
 import net.runelite.api.MenuEntry;
+import net.runelite.api.Skill;
+import net.runelite.api.Varbits;
 import net.runelite.api.NPC;
 import net.runelite.api.events.ConfigChanged;
 import net.runelite.api.events.FocusChanged;
@@ -353,6 +355,18 @@ public class MenuEntrySwapperPlugin extends Plugin
 			{
 				swap("pickpocket", option, target, true);
 			}
+			
+			if (config.swapBlackjack() && (target.contains("bandit") || target.contains("thug")))
+			{
+			    if (shiftModifier && canKnockOut())
+				{
+				    swap("knock-out", option, target, true);
+				}
+				else
+				{
+				    swap("pickpocket", option, target, true);
+				}
+			}
 
 			if (config.swapAbyssTeleport() && target.contains("mage of zamorak"))
 			{
@@ -608,6 +622,12 @@ public class MenuEntrySwapperPlugin extends Plugin
 		menuManager.removeManagedCustomMenu(RESIZABLE_INVENTORY_TAB_CONFIGURE);
 		menuManager.removeManagedCustomMenu(RESIZABLE_INVENTORY_TAB_SAVE);
 	}
+	
+    private boolean canKnockOut()
+	{
+		return (client.getBoostedSkillLevel(Skill.HITPOINTS) + client.getVar(Varbits.NMZ_ABSORPTION) > 4);
+	}
+
 
 	private void refreshShiftClickCustomizationMenus()
 	{
