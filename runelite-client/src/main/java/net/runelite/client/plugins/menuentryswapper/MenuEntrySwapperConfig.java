@@ -261,4 +261,14 @@ public interface MenuEntrySwapperConfig extends Config
 	{
 		return true;
 	}
+	
+	 
+	@ConfigItem( 
+		keyName = "swapBlackjack", 
+		name = "Blackjack or Pickpocket", 
+		description = "Swap Talk-to with Knock-out or Pickpocket on Thugs and Bandits" 
+	) 
+	default boolean swapBlackjack() {
+		return true;
+	}
 }
